@@ -1,0 +1,67 @@
+﻿@model appUploadFiles.Models.FileToUploadViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Formulario para subir archivos</h2>
+
+@if (ViewBag.msg != null)
+{
+    <div class="alert alert-success">@ViewBag.msg</div>
+}
+
+
+@using (Html.BeginForm("SaveFiles", "Archivos", FormMethod.Post,
+        new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.LabelFor(d => d.fileUpload01)
+                @Html.TextBoxFor(d => d.fileUpload01, new { @type = "file", @class = "form-control", @accept = ".jpg" })
+                @Html.ValidationMessageFor(d => d.fileUpload01, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.LabelFor(d => d.fileUpload02)
+                @Html.TextBoxFor(d => d.fileUpload02, new { @type = "file", @class = "form-control", @accept = ".jpg" })
+                @Html.ValidationMessageFor(d => d.fileUpload02, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.LabelFor(d => d.texto)
+                @Html.TextBoxFor(d => d.texto, new { @class = "form-control" })
+                @Html.ValidationMessageFor(d => d.texto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Subir archivos" class="btn btn-primary">
+    </div>
+
+}
+
+
+<h4>Archivos en la nube</h4>
+
+
+<ol>
+    @foreach (string fn in ViewBag.filesEntries)
+    {
+
+        <li><a href="/files/@Path.GetFileName(fn)"> @Path.GetFileName(fn) </a> </li>
+    }
+</ol>
+
+<h4>Archivos en la nube2</h4>
+<ol>
+    @foreach (string fn in ViewBag.myArrayFN)
+    {
+
+        <li><a href="/files/@fn"> @fn </a> </li>
+    }
+</ol>
+    
